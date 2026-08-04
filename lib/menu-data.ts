@@ -15,6 +15,40 @@ export interface MenuCategory {
 
 export const menuCategories: MenuCategory[] = [
   {
+    slug: "entrees",
+    label: "Entrées",
+    image: "/assets/menu/entrees.jpg",
+    items: [
+      { name: "Gyoza Poulet", price: "5,50 €", image: "/assets/menu/items/entree-gyoza-poulet.jpg" },
+      { name: "Gyoza Scampi", price: "5,70 €", image: "/assets/menu/items/gyoza-scampi.jpg" },
+      { name: "Yakitori de Poulet", price: "5,50 €", image: "/assets/menu/items/entree-yakitori-poulet.jpg" },
+      { name: "Karaage Poulet", price: "6,00 €", image: "/assets/menu/items/entree-karaage-poulet.jpg" },
+      { name: "Tempura Scampi", price: "6,50 €", image: "/assets/menu/items/entree-tempura-scampi.jpg" },
+      { name: "Dynamite Shrimp", price: "6,50 €", image: "/assets/menu/items/entree-dynamite-shrimp.jpg" },
+    ],
+  },
+  {
+    slug: "baos",
+    label: "Baos",
+    image: "/assets/menu/baos.jpg",
+    items: [
+      { name: "Bao Poulet Katsu", description: "Poulet Katsu, concombre, roquette, sauces spicy & unagi", price: "6,00 €", image: "/assets/menu/items/bao-poulet-katsu.jpg" },
+      { name: "Bao Yakitori Poulet", description: "Yakitori poulet, concombre, roquette, sauces spicy & truffe", price: "6,50 €", image: "/assets/menu/items/bao-yakitori-poulet.jpg" },
+      { name: "Bao Boeuf Épicé Caramélisé", description: "Boeuf épicé, concombre, roquette, sauces spicy & unagi", price: "7,00 €", image: "/assets/menu/items/bao-boeuf-epice-caramelise.jpg" },
+      { name: "Bao Tempura Scampi", description: "Tempura scampi, concombre, roquette, sauce spicy", price: "6,50 €", image: "/assets/menu/items/bao-tempura-scampi.jpg" },
+    ],
+  },
+  {
+    slug: "baos-burger",
+    label: "Baos Burger",
+    image: "/assets/menu/baos-burger.jpg",
+    items: [
+      { name: "Bao Burger Poulet Katsu", description: "Poulet katsu, concombre, roquette, sauces spicy & truffe", price: "12,90 €", image: "/assets/menu/items/bao-burger-poulet-katsu.jpg" },
+      { name: "Bao Burger Boeuf", description: "Boeuf, concombre, roquette, sauce spicy", price: "13,90 €", image: "/assets/menu/items/bao-burger-boeuf.jpg" },
+      { name: "Bao Burger Veggie", description: "Galette de pomme de terre, concombre, roquette, sauce spicy", price: "11,90 €", image: "/assets/menu/items/bao-burger-veggie.jpg" },
+    ],
+  },
+  {
     slug: "classic-rolls",
     label: "Classic Rolls",
     image: "/assets/menu/classic-rolls.jpg",
@@ -89,42 +123,8 @@ export const menuCategories: MenuCategory[] = [
     ],
   },
   {
-    slug: "entrees",
-    label: "Entrées",
-    image: "/assets/menu/entrees.jpg",
-    items: [
-      { name: "Gyoza Poulet", price: "5,50 €", image: "/assets/menu/items/entree-gyoza-poulet.jpg" },
-      { name: "Gyoza Scampi", price: "5,70 €", image: "/assets/menu/items/gyoza-scampi.jpg" },
-      { name: "Yakitori de Poulet", price: "5,50 €", image: "/assets/menu/items/entree-yakitori-poulet.jpg" },
-      { name: "Karaage Poulet", price: "6,00 €", image: "/assets/menu/items/entree-karaage-poulet.jpg" },
-      { name: "Tempura Scampi", price: "6,50 €", image: "/assets/menu/items/entree-tempura-scampi.jpg" },
-      { name: "Dynamite Shrimp", price: "6,50 €", image: "/assets/menu/items/entree-dynamite-shrimp.jpg" },
-    ],
-  },
-  {
-    slug: "baos",
-    label: "Baos",
-    image: "/assets/menu/baos.jpg",
-    items: [
-      { name: "Bao Poulet Katsu", description: "Poulet Katsu, concombre, roquette, sauces spicy & unagi", price: "6,00 €", image: "/assets/menu/items/bao-poulet-katsu.jpg" },
-      { name: "Bao Yakitori Poulet", description: "Yakitori poulet, concombre, roquette, sauces spicy & truffe", price: "6,50 €", image: "/assets/menu/items/bao-yakitori-poulet.jpg" },
-      { name: "Bao Boeuf Épicé Caramélisé", description: "Boeuf épicé, concombre, roquette, sauces spicy & unagi", price: "7,00 €", image: "/assets/menu/items/bao-boeuf-epice-caramelise.jpg" },
-      { name: "Bao Tempura Scampi", description: "Tempura scampi, concombre, roquette, sauce spicy", price: "6,50 €", image: "/assets/menu/items/bao-tempura-scampi.jpg" },
-    ],
-  },
-  {
-    slug: "baos-burger",
-    label: "Baos Burger",
-    image: "/assets/menu/baos-burger.jpg",
-    items: [
-      { name: "Bao Burger Poulet Katsu", description: "Poulet katsu, concombre, roquette, sauces spicy & truffe", price: "12,90 €", image: "/assets/menu/items/bao-burger-poulet-katsu.jpg" },
-      { name: "Bao Burger Boeuf", description: "Boeuf, concombre, roquette, sauce spicy", price: "13,90 €", image: "/assets/menu/items/bao-burger-boeuf.jpg" },
-      { name: "Bao Burger Veggie", description: "Galette de pomme de terre, concombre, roquette, sauce spicy", price: "11,90 €", image: "/assets/menu/items/bao-burger-veggie.jpg" },
-    ],
-  },
-  {
-    slug: "donburi-udon",
-    label: "Donburi - Udon",
+    slug: "donburi",
+    label: "Donburi",
     image: "/assets/menu/donburi-udon.jpg",
     items: [
       { name: "Poulet Katsu", price: "13,50 €", image: "/assets/menu/items/donburi-poulet-katsu.jpg" },
@@ -135,6 +135,18 @@ export const menuCategories: MenuCategory[] = [
       { name: "Saumon Frit", price: "14,50 €", note: "uniquement en donburi", image: "/assets/menu/items/donburi-saumon-frit.jpg" },
       { name: "Dynamite Shrimp", price: "14,50 €", note: "uniquement en donburi", image: "/assets/menu/items/donburi-dynamite-shrimp.jpg" },
       { name: "Poulet Crousty", price: "13,50 €", note: "uniquement en donburi", image: "/assets/menu/items/donburi-poulet-crousty.jpg" },
+    ],
+  },
+  {
+    slug: "udon",
+    label: "Udon",
+    image: "/assets/menu/donburi-udon.jpg",
+    items: [
+      { name: "Poulet Katsu", price: "13,50 €", image: "/assets/menu/items/udon-poulet-katsu.jpg" },
+      { name: "Poulet Teriyaki", price: "13,50 €", image: "/assets/menu/items/udon-poulet-teriyaki.jpg" },
+      { name: "Poulet Karaage", price: "13,50 €", image: "/assets/menu/items/udon-poulet-karaage.jpg" },
+      { name: "Boeuf Caramélisé", price: "14,50 €", image: "/assets/menu/items/udon-boeuf-caramelise.jpg" },
+      { name: "Scampi Teriyaki", price: "14,00 €", image: "/assets/menu/items/udon-scampi-teriyaki.jpg" },
     ],
   },
   {
@@ -158,6 +170,15 @@ export const menuCategories: MenuCategory[] = [
       { name: "Salade de Choux", price: "2,90 €", image: "/assets/menu/items/salade-de-choux.jpg" },
       { name: "Salade d'Algues", price: "3,60 €", image: "/assets/menu/items/salade-dalgues.jpg" },
       { name: "Frites de Patates Douces", price: "3,40 €", image: "/assets/menu/items/frites-de-patates-douces.jpg" },
+    ],
+  },
+  {
+    slug: "desserts",
+    label: "Desserts",
+    image: "/assets/menu/desserts.jpg",
+    items: [
+      { name: "Tiramisu Spéculoos Caramel", price: "5,00 €", image: "/assets/menu/items/tiramisu-speculoos-caramel.jpg" },
+      { name: "Tiramisu Pistache", price: "5,00 €", image: "/assets/menu/items/tiramisu-pistache.jpg" },
     ],
   },
   {
@@ -198,15 +219,6 @@ export const menuCategories: MenuCategory[] = [
       { name: "Mojito Passion", price: "5,50 €", image: "/assets/menu/items/mojito-passion.jpg" },
       { name: "Mojito Pêche", price: "5,50 €", image: "/assets/menu/items/mojito-peche.jpg" },
       { name: "Mojito Violette", price: "5,50 €", image: "/assets/menu/items/mojito-violette.jpg" },
-    ],
-  },
-  {
-    slug: "desserts",
-    label: "Desserts",
-    image: "/assets/menu/desserts.jpg",
-    items: [
-      { name: "Tiramisu Spéculoos Caramel", price: "5,00 €", image: "/assets/menu/items/tiramisu-speculoos-caramel.jpg" },
-      { name: "Tiramisu Pistache", price: "5,00 €", image: "/assets/menu/items/tiramisu-pistache.jpg" },
     ],
   },
 ];
