@@ -28,7 +28,7 @@ export default function Info() {
                 Téléphone
               </dt>
               <dd className="mt-1 text-ink/80">
-                <a href="tel:0492753939" className="hover:text-red transition-colors">
+                <a href="tel:+32492753939" className="hover:text-red transition-colors">
                   0492 75 39 39
                 </a>
               </dd>

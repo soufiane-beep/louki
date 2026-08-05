@@ -23,9 +23,9 @@ export default function Hero() {
           className="h-44 w-auto drop-shadow-[0_8px_32px_rgba(0,0,0,0.55)] md:h-64"
         />
 
-        <p className="mt-6 font-display text-lg uppercase tracking-widest text-white md:text-xl">
-          Rolls, Baos &amp; Poke Bowls · Bruxelles
-        </p>
+        <h1 className="mt-6 font-display text-lg font-normal uppercase tracking-widest text-white md:text-xl">
+          <span className="sr-only">Louki Sushi — </span>Rolls, Baos &amp; Poke Bowls · Bruxelles
+        </h1>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <a
