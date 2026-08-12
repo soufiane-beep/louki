@@ -15,6 +15,7 @@ export default function Menu() {
 
   const barRef = useRef<HTMLDivElement | null>(null);
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
+  const buttonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const suspendObserver = useRef(false);
   const suspendTimeout = useRef<ReturnType<typeof setTimeout>>();
 
@@ -52,6 +53,11 @@ export default function Menu() {
   }, []);
 
   useEffect(() => {
+    const btn = buttonRefs.current[active];
+    if (btn) btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  }, [active]);
+
+  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (suspendObserver.current) return;
@@ -77,9 +83,10 @@ export default function Menu() {
         </h1>
 
         <div ref={barRef} className="sticky top-[68px] z-40 -mx-5 mt-10 bg-cream/95 backdrop-blur-sm">
-          <div className="flex flex-wrap justify-center gap-2 px-5 py-3">
+          <div className="no-scrollbar flex overflow-x-auto gap-2 px-5 py-3">
             {menuCategories.map((cat) => (
               <button
+                ref={(el) => { buttonRefs.current[cat.slug] = el; }}
                 key={cat.slug}
                 onClick={() => scrollToCategory(cat.slug)}
                 className={`shrink-0 rounded-full px-4 py-2 font-display text-xs uppercase tracking-wide transition-colors md:text-sm ${
