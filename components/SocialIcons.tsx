@@ -22,6 +22,16 @@ export function IconPhone({ className }: { className?: string }) {
   );
 }
 
+export function IconCart({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="9" cy="21" r="1.5" fill="currentColor" stroke="none" />
+      <circle cx="18" cy="21" r="1.5" fill="currentColor" stroke="none" />
+      <path d="M2.5 3h2l2.4 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21.5 7H6" />
+    </svg>
+  );
+}
+
 export function IconSnapchat({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

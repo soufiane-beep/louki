@@ -4,10 +4,14 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { menuCategories } from "@/lib/menu-data";
+import { useCart } from "@/lib/cart-context";
+import { CATEGORIES_WITHOUT_SIDES_UPSELL } from "@/lib/site-config";
+import QuantityStepper from "@/components/QuantityStepper";
 
 const NAVBAR_HEIGHT = 68; // fixed site header height
 
 export default function Menu() {
+  const { addItem, setQuantity, quantityOf, openSidesModal } = useCart();
   const searchParams = useSearchParams();
   const initialSlug = menuCategories.find((c) => c.slug === searchParams.get("cat"))?.slug;
   const [active, setActive] = useState(initialSlug ?? menuCategories[0].slug);
@@ -108,10 +112,34 @@ export default function Menu() {
               </div>
 
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {category.items.map((item) =>
-                  item.image ? (
+                {category.items.map((item) => {
+                  const qty = quantityOf(category.slug, item.name);
+                  const cartControl =
+                    qty > 0 ? (
+                      <QuantityStepper
+                        size="sm"
+                        quantity={qty}
+                        onIncrement={() => addItem(category.slug, item.name, item.price)}
+                        onDecrement={() => setQuantity(category.slug, item.name, qty - 1)}
+                      />
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          addItem(category.slug, item.name, item.price);
+                          if (!CATEGORIES_WITHOUT_SIDES_UPSELL.includes(category.slug)) {
+                            openSidesModal();
+                          }
+                        }}
+                        className="rounded-full bg-red px-3 py-1 font-display text-xs uppercase tracking-wide text-white transition-transform hover:scale-105"
+                      >
+                        + Ajouter
+                      </button>
+                    );
+
+                  return item.image ? (
                     <div
-                      key={item.name}
+                      key={`${category.slug}::${item.name}`}
                       className="group relative aspect-[4/5] overflow-hidden rounded-2xl bg-ink"
                     >
                       <Image
@@ -137,11 +165,12 @@ export default function Menu() {
                         {item.description && (
                           <p className="mt-1 font-body text-sm text-white/70">{item.description}</p>
                         )}
+                        <div className="mt-3 flex justify-end">{cartControl}</div>
                       </div>
                     </div>
                   ) : (
                     <div
-                      key={item.name}
+                      key={`${category.slug}::${item.name}`}
                       className="flex flex-col justify-between rounded-2xl border border-ink/10 bg-white p-5"
                     >
                       <div className="flex items-start justify-between gap-3">
@@ -158,9 +187,10 @@ export default function Menu() {
                       {item.description && (
                         <p className="mt-2 font-body text-sm text-ink/60">{item.description}</p>
                       )}
+                      <div className="mt-3 flex justify-end">{cartControl}</div>
                     </div>
-                  )
-                )}
+                  );
+                })}
               </div>
             </div>
           ))}

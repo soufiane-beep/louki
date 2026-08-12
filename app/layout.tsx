@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Oswald, DM_Sans } from "next/font/google";
 import "./globals.css";
+import { CartProvider } from "@/lib/cart-context";
+import CartDrawer from "@/components/CartDrawer";
+import SidesModal from "@/components/SidesModal";
 
 const oswald = Oswald({
   subsets: ["latin"],
@@ -28,7 +31,11 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={`${oswald.variable} ${dmSans.variable} font-body bg-cream text-ink antialiased`}>
-        {children}
+        <CartProvider>
+          {children}
+          <CartDrawer />
+          <SidesModal />
+        </CartProvider>
       </body>
     </html>
   );

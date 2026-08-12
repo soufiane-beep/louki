@@ -1,12 +1,12 @@
+import Link from "next/link";
 import { IconInstagram, IconTikTok, IconSnapchat, IconPhone } from "@/components/SocialIcons";
+import { ORDER_TYPES } from "@/lib/site-config";
 
 const socials = [
   { label: "Instagram", href: "https://www.instagram.com/loukisushi", Icon: IconInstagram },
   { label: "TikTok", href: "https://www.tiktok.com/@loukisushi", Icon: IconTikTok },
   { label: "Snapchat", href: "https://www.snapchat.com/@loukisushi", Icon: IconSnapchat },
 ];
-
-const options = ["À emporter", "Livraison à domicile"];
 
 export default function Contact() {
   return (
@@ -37,7 +37,7 @@ export default function Contact() {
         </p>
 
         <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-          {options.map((option) => (
+          {ORDER_TYPES.map((option) => (
             <span
               key={option}
               className="rounded-full border border-cream/20 px-4 py-1.5 font-display text-xs uppercase tracking-wide text-cream/80"
@@ -47,13 +47,21 @@ export default function Contact() {
           ))}
         </div>
 
-        <a
-          href="tel:0492753939"
-          className="mt-10 inline-flex items-center gap-3 rounded-full bg-red px-8 py-4 font-display text-xl uppercase tracking-wide text-white shadow-lg shadow-red/40 transition-transform hover:scale-105 md:text-2xl"
-        >
-          <IconPhone className="h-6 w-6" />
-          0492 75 39 39
-        </a>
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <a
+            href="tel:0492753939"
+            className="inline-flex items-center gap-3 rounded-full bg-red px-8 py-4 font-display text-xl uppercase tracking-wide text-white shadow-lg shadow-red/40 transition-transform hover:scale-105 md:text-2xl"
+          >
+            <IconPhone className="h-6 w-6" />
+            0492 75 39 39
+          </a>
+          <Link
+            href="/menu"
+            className="inline-flex items-center gap-3 rounded-full border border-cream/40 px-8 py-4 font-display text-xl uppercase tracking-wide text-cream transition-transform hover:scale-105 hover:border-peach hover:text-peach md:text-2xl"
+          >
+            Commander en ligne
+          </Link>
+        </div>
 
         <p className="mt-6 font-body text-sm text-cream/50">
           Rue Érasme 66, 1070 Anderlecht · Tous les jours — 18h à 04h
