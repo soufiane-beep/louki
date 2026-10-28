@@ -3,7 +3,6 @@ import { Oswald, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart-context";
 import CartDrawer from "@/components/CartDrawer";
-import SidesModal from "@/components/SidesModal";
 
 const oswald = Oswald({
   subsets: ["latin"],
@@ -31,10 +30,15 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={`${oswald.variable} ${dmSans.variable} font-body bg-cream text-ink antialiased`}>
+        {/* Retient un tap sur le burger fait avant l'hydratation (sinon il est perdu) ; la Navbar le rejoue au montage. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){function h(e){var t=e.target;if(t&&t.closest&&t.closest("[data-menu-toggle]")){window.__loukiMenuPending=!window.__loukiMenuPending;}}window.__loukiMenuEarly=h;document.addEventListener("click",h,true);})();`,
+          }}
+        />
         <CartProvider>
           {children}
           <CartDrawer />
-          <SidesModal />
         </CartProvider>
       </body>
     </html>

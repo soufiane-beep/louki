@@ -35,6 +35,20 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [hasDarkHero]);
 
+  // Rejoue un tap sur le burger capturé avant l'hydratation (cf. script inline dans layout.tsx).
+  useEffect(() => {
+    const w = window as Window & {
+      __loukiMenuPending?: boolean;
+      __loukiMenuEarly?: (e: MouseEvent) => void;
+    };
+    if (w.__loukiMenuEarly) {
+      document.removeEventListener("click", w.__loukiMenuEarly, true);
+      w.__loukiMenuEarly = undefined;
+    }
+    if (w.__loukiMenuPending) setOpen(true);
+    w.__loukiMenuPending = false;
+  }, []);
+
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -104,6 +118,8 @@ export default function Navbar() {
             </button>
 
             <button
+              type="button"
+              data-menu-toggle
               aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
               aria-expanded={open}
               onClick={() => setOpen((v) => !v)}

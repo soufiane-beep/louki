@@ -1,7 +1,41 @@
 "use client";
 
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { parsePrice } from "@/lib/money";
+import { menuCategories } from "@/lib/menu-data";
+
+const STORAGE_KEY = "louki:cart-lines";
+
+function loadStoredLines(): CartLine[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    // Le prix stocké peut dater d'une ancienne carte : on le reprend toujours de la carte
+    // actuelle, et on écarte les plats qui n'y figurent plus.
+    return parsed.flatMap((l): CartLine[] => {
+      if (
+        !l ||
+        typeof l.categorySlug !== "string" ||
+        typeof l.itemName !== "string" ||
+        typeof l.quantity !== "number" ||
+        !Number.isInteger(l.quantity) ||
+        l.quantity <= 0
+      ) {
+        return [];
+      }
+      const item = menuCategories
+        .find((c) => c.slug === l.categorySlug)
+        ?.items.find((i) => i.name === l.itemName);
+      if (!item) return [];
+      return [{ categorySlug: l.categorySlug, itemName: l.itemName, price: item.price, quantity: l.quantity }];
+    });
+  } catch {
+    return [];
+  }
+}
 
 export interface CartLine {
   categorySlug: string;
@@ -23,9 +57,6 @@ interface CartContextValue {
   openDrawer: () => void;
   closeDrawer: () => void;
   toggleDrawer: () => void;
-  isSidesModalOpen: boolean;
-  openSidesModal: () => void;
-  closeSidesModal: () => void;
 }
 
 const lineKey = (categorySlug: string, itemName: string) => `${categorySlug}::${itemName}`;
@@ -35,7 +66,25 @@ const CartContext = createContext<CartContextValue | null>(null);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
-  const [isSidesModalOpen, setSidesModalOpen] = useState(false);
+  // State (et non ref) : l'effet de sauvegarde ne doit jamais tourner avant la lecture du
+  // stockage, sinon il l'écrase avec le panier vide initial.
+  const [hasHydrated, setHasHydrated] = useState(false);
+
+  // Le contenu stocké n'est lu qu'après montage (localStorage indisponible en SSR).
+  useEffect(() => {
+    setLines(loadStoredLines());
+    setHasHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hasHydrated) return;
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(lines));
+    } catch {
+      // Stockage indisponible (navigation privée, quota) : la persistance est une
+      // simple aide UX, on échoue silencieusement.
+    }
+  }, [lines, hasHydrated]);
 
   const addItem = (categorySlug: string, itemName: string, price: string) => {
     setLines((prev) => {
@@ -92,9 +141,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     openDrawer: () => setDrawerOpen(true),
     closeDrawer: () => setDrawerOpen(false),
     toggleDrawer: () => setDrawerOpen((v) => !v),
-    isSidesModalOpen,
-    openSidesModal: () => setSidesModalOpen(true),
-    closeSidesModal: () => setSidesModalOpen(false),
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

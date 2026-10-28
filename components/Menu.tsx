@@ -5,13 +5,12 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { menuCategories } from "@/lib/menu-data";
 import { useCart } from "@/lib/cart-context";
-import { CATEGORIES_WITHOUT_SIDES_UPSELL } from "@/lib/site-config";
 import QuantityStepper from "@/components/QuantityStepper";
 
 const NAVBAR_HEIGHT = 68; // fixed site header height
 
 export default function Menu() {
-  const { addItem, setQuantity, quantityOf, openSidesModal } = useCart();
+  const { addItem, setQuantity, quantityOf } = useCart();
   const searchParams = useSearchParams();
   const initialSlug = menuCategories.find((c) => c.slug === searchParams.get("cat"))?.slug;
   const [active, setActive] = useState(initialSlug ?? menuCategories[0].slug);
@@ -125,12 +124,7 @@ export default function Menu() {
                     ) : (
                       <button
                         type="button"
-                        onClick={() => {
-                          addItem(category.slug, item.name, item.price);
-                          if (!CATEGORIES_WITHOUT_SIDES_UPSELL.includes(category.slug)) {
-                            openSidesModal();
-                          }
-                        }}
+                        onClick={() => addItem(category.slug, item.name, item.price)}
                         className="rounded-full bg-red px-3 py-1 font-display text-xs uppercase tracking-wide text-white transition-transform hover:scale-105"
                       >
                         + Ajouter

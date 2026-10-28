@@ -23,7 +23,10 @@ export default function QuantityStepper({
       >
         −
       </button>
-      <span className="w-4 text-center tabular-nums">{quantity}</span>
+      {/* Fond propre (indépendant du bg de la carte parente) pour rester lisible sur clair et sombre. */}
+      <span className="min-w-4 rounded-full bg-cream px-1.5 py-0.5 text-center text-ink tabular-nums">
+        {quantity}
+      </span>
       <button
         type="button"
         aria-label="Ajouter un"
