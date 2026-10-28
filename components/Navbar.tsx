@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useCart } from "@/lib/cart-context";
+import { IconCart } from "@/components/SocialIcons";
 
 const links = [
   { href: "/menu", label: "Menu" },
@@ -15,6 +17,7 @@ const links = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { itemCount, openDrawer } = useCart();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -31,6 +34,20 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, [hasDarkHero]);
+
+  // Rejoue un tap sur le burger capturé avant l'hydratation (cf. script inline dans layout.tsx).
+  useEffect(() => {
+    const w = window as Window & {
+      __loukiMenuPending?: boolean;
+      __loukiMenuEarly?: (e: MouseEvent) => void;
+    };
+    if (w.__loukiMenuEarly) {
+      document.removeEventListener("click", w.__loukiMenuEarly, true);
+      w.__loukiMenuEarly = undefined;
+    }
+    if (w.__loukiMenuPending) setOpen(true);
+    w.__loukiMenuPending = false;
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -83,31 +100,51 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <button
-            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-            className="relative z-[70] flex h-11 w-11 items-center justify-center md:hidden"
-          >
-            <span
-              className={`absolute h-0.5 w-6 rounded-full transition-all duration-300 ${
-                solid || open ? "bg-ink" : "bg-white"
-              } ${open ? "rotate-45" : "-translate-y-[5px]"}`}
-            />
-            <span
-              className={`absolute h-0.5 w-6 rounded-full transition-all duration-300 ${
-                solid || open ? "bg-ink" : "bg-white"
-              } ${open ? "-rotate-45" : "translate-y-[5px]"}`}
-            />
-          </button>
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              aria-label="Voir mon panier"
+              onClick={openDrawer}
+              className={`relative z-[70] flex h-11 w-11 items-center justify-center transition-colors ${
+                solid ? "text-ink" : "text-white drop-shadow"
+              }`}
+            >
+              <IconCart className="h-6 w-6" />
+              {itemCount > 0 && (
+                <span className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red font-display text-[11px] text-white">
+                  {itemCount}
+                </span>
+              )}
+            </button>
+
+            <button
+              type="button"
+              data-menu-toggle
+              aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+              aria-expanded={open}
+              onClick={() => setOpen((v) => !v)}
+              className="relative z-[70] flex h-11 w-11 items-center justify-center md:hidden"
+            >
+              <span
+                className={`absolute h-0.5 w-6 rounded-full transition-all duration-300 ${
+                  solid || open ? "bg-ink" : "bg-white"
+                } ${open ? "rotate-45" : "-translate-y-[5px]"}`}
+              />
+              <span
+                className={`absolute h-0.5 w-6 rounded-full transition-all duration-300 ${
+                  solid || open ? "bg-ink" : "bg-white"
+                } ${open ? "-rotate-45" : "translate-y-[5px]"}`}
+              />
+            </button>
+          </div>
         </nav>
       </header>
 
       <div
         className={`fixed inset-0 z-[45] bg-cream transition-[clip-path] duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] md:hidden ${
           open
-            ? "[clip-path:circle(2000px_at_calc(100%-2.625rem)_2.125rem)]"
-            : "pointer-events-none [clip-path:circle(0px_at_calc(100%-2.625rem)_2.125rem)]"
+            ? "[clip-path:circle(2000px_at_calc(100%-5.625rem)_2.125rem)]"
+            : "pointer-events-none [clip-path:circle(0px_at_calc(100%-5.625rem)_2.125rem)]"
         }`}
         aria-hidden={!open}
       >
