@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { menuCategories } from "@/lib/menu-data";
 import { useCart } from "@/lib/cart-context";
@@ -11,9 +10,7 @@ const NAVBAR_HEIGHT = 68; // fixed site header height
 
 export default function Menu() {
   const { addItem, setQuantity, quantityOf } = useCart();
-  const searchParams = useSearchParams();
-  const initialSlug = menuCategories.find((c) => c.slug === searchParams.get("cat"))?.slug;
-  const [active, setActive] = useState(initialSlug ?? menuCategories[0].slug);
+  const [active, setActive] = useState(menuCategories[0].slug);
   const [scrollOffset, setScrollOffset] = useState(NAVBAR_HEIGHT + 56);
 
   const barRef = useRef<HTMLDivElement | null>(null);
@@ -44,8 +41,12 @@ export default function Menu() {
   };
 
   useEffect(() => {
-    if (!initialSlug) return;
-    const t = setTimeout(() => scrollToCategory(initialSlug, "auto"), 50);
+    // Deep links from the homepage teaser (/menu?cat=slug), read client-side so the
+    // full menu stays in the statically exported HTML.
+    const requested = new URLSearchParams(window.location.search).get("cat");
+    const slug = menuCategories.find((c) => c.slug === requested)?.slug;
+    if (!slug) return;
+    const t = setTimeout(() => scrollToCategory(slug, "auto"), 50);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -71,9 +72,9 @@ export default function Menu() {
         <p className="text-center font-display text-sm uppercase tracking-widest text-red">
           La carte
         </p>
-        <h2 className="mt-2 text-center font-display text-4xl uppercase tracking-wide text-ink md:text-5xl">
-          Le menu
-        </h2>
+        <h1 className="mt-2 text-center font-display text-4xl uppercase tracking-wide text-ink md:text-5xl">
+          Le menu de Louki Sushi
+        </h1>
 
         <div ref={barRef} className="sticky top-[68px] z-40 -mx-5 mt-10 bg-cream/95 backdrop-blur-sm">
           <div className="flex flex-wrap justify-center gap-2 px-5 py-3">
@@ -105,9 +106,9 @@ export default function Menu() {
             >
               <div className="relative mb-6 inline-block">
                 <span className="absolute inset-0 -skew-x-3 bg-peach" />
-                <h3 className="relative px-4 py-1 font-display text-2xl uppercase tracking-wide text-ink">
+                <h2 className="relative px-4 py-1 font-display text-2xl uppercase tracking-wide text-ink">
                   {category.label}
-                </h3>
+                </h2>
               </div>
 
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">

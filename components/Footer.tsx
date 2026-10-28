@@ -76,7 +76,7 @@ export default function Footer() {
           </p>
           <ul className="flex flex-col gap-2 text-sm text-cream/80">
             <li>
-              <a href="tel:0492753939" className="transition-colors hover:text-white">
+              <a href="tel:+32492753939" className="transition-colors hover:text-white">
                 0492 75 39 39
               </a>
             </li>

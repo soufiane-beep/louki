@@ -19,14 +19,10 @@ export default function About() {
             vos envies jusqu&apos;au petit matin.
           </p>
           <p className="mt-4 text-lg leading-relaxed text-ink/80">
-            Aujourd&apos;hui, l&apos;aventure continue et évolue. Nous vous
-            accueillons désormais aussi en journée pour déguster nos
-            créations sur place, dans une ambiance conviviale.
-          </p>
-          <p className="mt-4 text-lg leading-relaxed text-ink/80">
-            De jour comme de nuit, notre engagement reste le même : des
-            produits frais, des préparations à la demande et le bonheur de
-            vous régaler à toute heure.
+            Aujourd&apos;hui, l&apos;aventure continue : tous les jours, de
+            18h00 à 04h00, notre engagement reste le même — des produits
+            frais, des préparations à la demande et le bonheur de vous
+            régaler jusqu&apos;au bout de la nuit.
           </p>
           <p className="mt-4 text-lg leading-relaxed text-ink/80">
             Et pour prolonger ce plaisir jusque chez vous, nous vous livrons

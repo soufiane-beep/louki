@@ -1,0 +1,13 @@
+{
+  "name": "Louki Sushi",
+  "short_name": "Louki Sushi",
+  "description": "Cuisine japonaise et street food moderne à Bruxelles — rolls, baos, poke bowls. Tous les jours de 18h00 à 04h00.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#F5F4F2",
+  "theme_color": "#F5F4F2",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

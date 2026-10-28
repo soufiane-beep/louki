@@ -49,7 +49,7 @@ export default function Contact() {
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <a
-            href="tel:0492753939"
+            href="tel:+32492753939"
             className="inline-flex items-center gap-3 rounded-full bg-red px-8 py-4 font-display text-xl uppercase tracking-wide text-white shadow-lg shadow-red/40 transition-transform hover:scale-105 md:text-2xl"
           >
             <IconPhone className="h-6 w-6" />
